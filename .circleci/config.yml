@@ -1,0 +1,39 @@
+version: 2.1
+
+parameters:
+  node-version:
+    type: string
+    default: "18.16.0"
+
+commands:
+  yarn-install:
+    steps:
+      - run: yarn install --immutable --immutable-cache
+
+jobs:
+  checks:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn npm audit --severity=critical
+      - run: yarn dedupe --check
+      - run: yarn pretty
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn coverage
+      - run: |-
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN} --file coverage/coverage-final.json
+      - store_artifacts:
+          path: "coverage"
+
+workflows:
+  version: 2.1
+
+  ci:
+    jobs:
+      - checks
