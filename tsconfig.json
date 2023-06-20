@@ -1,11 +1,20 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "rootDir": "./src",
     "outDir": "./dist",
-    "composite": true,
-    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "types": ["node", "mocha"]
   },
   "include": ["src/**/*.ts"],
   "exclude": []

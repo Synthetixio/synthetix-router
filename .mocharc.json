@@ -3,12 +3,8 @@
   "recursive": true,
   "sort": true,
   "timeout": 10000,
-  "extension": [
-    "ts"
-  ],
-  "spec": [
-    "test/src/**/*.test.ts"
-  ],
+  "extension": ["ts"],
+  "spec": ["test/src/**/*.test.ts"],
   "watch-files": [
     "src/**/*.ts",
     "test/**/*.ts",
