@@ -1,21 +1,10 @@
 {
   "all": true,
-  "extension": [
-    ".ts"
-  ],
-  "include": [
-    "src/tasks/**/*.ts",
-    "src/subtasks/**/*.ts",
-    "src/internal/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.d.ts"
-  ],
+  "extension": [".ts"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.d.ts"],
   "check-coverage": true,
-  "reporter": [
-    "lcov",
-    "text"
-  ],
+  "reporter": ["text", "json"],
   "branches": 1,
   "lines": 1,
   "functions": 1,

@@ -1,1 +1,1 @@
-module.exports = require('../dist/utils/cannon')
+module.exports = require('../dist/utils/cannon');
