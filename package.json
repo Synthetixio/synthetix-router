@@ -15,6 +15,7 @@
     "cannon"
   ],
   "files": [
+    "src",
     "dist",
     "templates",
     "utils"
