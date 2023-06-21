@@ -38,6 +38,7 @@
     "hardhat": "^2.0.0"
   },
   "devDependencies": {
+    "@ethersproject/abi": "^5.7.0",
     "@types/debug": "^4.1.8",
     "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",
@@ -46,24 +47,21 @@
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "@usecannon/builder": "^2.4.16",
+    "ajv": "^8.11.0",
+    "debug": "^4.3.4",
     "eslint": "8.43.0",
     "eslint-plugin-no-only-tests": "^3.1.0",
+    "ethers": "^5.7.2",
     "hardhat": "^2.0.0",
+    "lodash": "^4.17.21",
     "mocha": "^10.2.0",
+    "mustache": "^4.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.8.8",
+    "solc": "^0.8.17",
     "ts-node": "^10.9.1",
     "typechain": "^8.2.0",
     "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "ajv": "^8.11.0",
-    "debug": "^4.3.4",
-    "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
-    "mustache": "^4.2.0",
-    "solc": "^0.8.17"
   },
   "peerDependenciesMeta": {
     "@usecannon/builder": {
