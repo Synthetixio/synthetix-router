@@ -1,6 +1,6 @@
-import path from 'node:path';
 import { JsonFragment } from '@ethersproject/abi';
 import { ethers } from 'ethers';
+
 import { ContractValidationError } from './errors';
 import { renderTemplate } from './render-template';
 import { routerFunctionFilter } from './router-function-filter';
@@ -34,7 +34,7 @@ interface BinaryData {
 
 export function renderRouter({
   routerName = 'Router',
-  template = path.resolve(__dirname, '..', '..', 'templates', 'Router.sol.mustache'),
+  template = require('path').resolve(__dirname, '..', '..', 'templates', 'Router.sol.mustache'),
   functionFilter = routerFunctionFilter,
   contracts,
 }: Props) {

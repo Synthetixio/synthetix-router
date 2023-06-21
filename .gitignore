@@ -122,6 +122,9 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# VSCode Settings
+.vscode
+
 # yarn v2
 .yarn/*
 !.yarn/cache
@@ -131,3 +134,6 @@ dist
 !.yarn/sdks
 .yarn/versions
 .pnp.*
+
+# Solidity cache/ folder
+cache/
