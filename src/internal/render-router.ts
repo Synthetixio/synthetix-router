@@ -1,9 +1,10 @@
+import Mustache from 'mustache';
 import { JsonFragment } from '@ethersproject/abi';
 import { ethers } from 'ethers';
 
 import { ContractValidationError } from './errors';
-import { renderTemplate } from './render-template';
 import { routerFunctionFilter } from './router-function-filter';
+import { routerTemplate } from '../templates/router';
 import { toPrivateConstantCase } from './router-helper';
 
 const TAB = '    ';
@@ -34,7 +35,7 @@ interface BinaryData {
 
 export function renderRouter({
   routerName = 'Router',
-  template = require('path').resolve(__dirname, '..', '..', 'templates', 'Router.sol.mustache'),
+  template = routerTemplate,
   functionFilter = routerFunctionFilter,
   contracts,
 }: Props) {
@@ -48,7 +49,7 @@ export function renderRouter({
 
   const binaryData = _buildBinaryData(selectors);
 
-  return renderTemplate(template, {
+  return Mustache.render(template, {
     moduleName: routerName,
     modules: _renderModules(contracts),
     selectors: _renderSelectors(binaryData),
