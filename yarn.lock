@@ -1343,7 +1343,9 @@ __metadata:
     typescript: ^4.9.5
   peerDependencies:
     "@usecannon/builder": ^2.4.0-alpha.1
+    ethers: ^5.0.0
     hardhat: ^2.0.0
+    solc: ^0.8.17
   peerDependenciesMeta:
     "@usecannon/builder":
       optional: true
