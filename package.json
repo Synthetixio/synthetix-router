@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "mocha --require ts-node/register",
+    "test": "mocha",
     "coverage": "nyc yarn test",
     "test:watch": "yarn test --watch",
     "prepublishOnly": "yarn build",

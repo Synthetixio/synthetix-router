@@ -1,8 +1,10 @@
 .idea/
 .nyc_output/
 .yarn/
+.yarnrc.yml
+.mocharc.json
+cache/
 coverage/
 dist/
 node_modules/
-.yarnrc.yml
 package.json

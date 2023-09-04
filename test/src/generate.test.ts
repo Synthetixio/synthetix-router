@@ -1,12 +1,9 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { deepEqual, throws } from 'assert/strict';
-import { generateRouter } from '../../src/generate';
-import { ContractValidationError } from '../../src/internal/errors';
-import abi from '../fixtures/SampleABI.json';
+import { deepEqual, throws } from 'node:assert/strict';
 
-const loadFile = (filepath: string) =>
-  fs.readFile(path.join(__dirname, filepath)).then((d) => d.toString());
+import abi from '../fixtures/SampleABI.json';
+import { ContractValidationError } from '../../src/internal/errors';
+import { generateRouter } from '../../src/generate';
+import { loadFile } from './helpers';
 
 describe('src/generate.ts', function () {
   it('throw an error when generating a router with repeated selectors', async function () {

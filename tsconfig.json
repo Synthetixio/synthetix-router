@@ -13,9 +13,8 @@
     "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "types": ["node", "mocha"]
+    "sourceMap": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": []
+  "files": ["./src/declare.d.ts"],
+  "include": ["src/**/*.ts"]
 }
