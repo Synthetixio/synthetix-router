@@ -134,6 +134,3 @@ dist
 !.yarn/sdks
 .yarn/versions
 .pnp.*
-
-# Solidity cache/ folder
-cache/
