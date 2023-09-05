@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 
 import fs from 'node:fs/promises';
+import hre from 'hardhat';
 import path from 'node:path';
 import { ChainBuilderContext, ContractMap } from '@usecannon/builder';
 import { ethers } from 'ethers';
-import hre from 'hardhat';
 import { glob, runTypeChain } from 'typechain';
 
 interface Params {

@@ -1,6 +1,6 @@
 import Mustache from 'mustache';
-import { JsonFragment } from '@ethersproject/abi';
-import { ethers } from 'ethers';
+import { Fragment, FunctionFragment, JsonFragment } from '@ethersproject/abi';
+import { keccak256 } from '@ethersproject/keccak256';
 
 import { ContractValidationError } from './errors';
 import { routerFunctionFilter } from './router-function-filter';
@@ -19,7 +19,7 @@ interface Props {
 export interface ContractData {
   contractName: string;
   deployedAddress: string;
-  abi: ReadonlyArray<JsonFragment>;
+  abi: JsonFragment[];
 }
 
 interface FunctionSelector {
@@ -178,21 +178,26 @@ function _buildBinaryData(selectors: FunctionSelector[]) {
 }
 
 export function getSelectors(
-  contractAbi: ethers.ContractInterface,
+  contractAbi: JsonFragment[],
   functionFilter: (fnName: string) => boolean = () => true
 ) {
-  const contract = new ethers.Contract('0x0000000000000000000000000000000000000001', contractAbi);
-
-  return contract.interface.fragments.reduce((selectors, fragment) => {
-    if (fragment.type === 'function' && functionFilter(fragment.name)) {
-      selectors.push({
+  return contractAbi
+    .filter(
+      (fragment) =>
+        fragment.type === 'function' &&
+        typeof fragment.name === 'string' &&
+        functionFilter(fragment.name)
+    )
+    .map((fragment) => {
+      return {
         name: fragment.name,
-        selector: contract.interface.getSighash(fragment),
-      });
-    }
+        selector: _getFunctionSelector(fragment as FunctionFragment),
+      };
+    }) as { name: string; selector: string }[];
+}
 
-    return selectors;
-  }, [] as { name: string; selector: string }[]);
+function _getFunctionSelector(fragment: FunctionFragment) {
+  return keccak256(Buffer.from(Fragment.fromObject(fragment).format())).slice(0, 10);
 }
 
 function _validateSelectors(selectors: FunctionSelector[]) {

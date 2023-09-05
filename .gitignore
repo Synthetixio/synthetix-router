@@ -135,5 +135,6 @@ dist
 .yarn/versions
 .pnp.*
 
-# Solidity cache/ folder
-cache/
+/cache
+/dist
+/node_modules

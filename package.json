@@ -1,6 +1,6 @@
 {
   "name": "@synthetixio/router",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "publishConfig": {
     "access": "public"
   },
@@ -35,47 +35,37 @@
     "pretty:fix": "prettier --write ."
   },
   "peerDependencies": {
-    "@usecannon/builder": "^2.4.0-alpha.1",
+    "@usecannon/builder": "^2.0.0",
     "ethers": "^5.0.0",
     "hardhat": "^2.0.0",
     "solc": "^0.8.17"
   },
   "dependencies": {
+    "@ethersproject/keccak256": "^5.7.0",
     "debug": "^4.3.4",
-    "lodash": "^4.17.21",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@types/debug": "^4.1.8",
-    "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",
     "@types/mustache": "^4.2.2",
-    "@types/node": "^18.16.18",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
-    "@usecannon/builder": "^2.4.16",
-    "ajv": "^8.11.0",
-    "eslint": "8.43.0",
+    "@types/node": "^18.17.14",
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "@typescript-eslint/parser": "^6.6.0",
+    "@usecannon/builder": "^2.5.4",
+    "eslint": "^8.48.0",
     "eslint-plugin-no-only-tests": "^3.1.0",
     "ethers": "^5.7.2",
-    "hardhat": "^2.0.0",
+    "hardhat": "^2.17.2",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.8",
-    "solc": "^0.8.17",
+    "prettier": "^3.0.3",
+    "solc": "^0.8.21",
     "ts-node": "^10.9.1",
-    "typechain": "^8.2.0",
-    "typescript": "^4.9.5"
-  },
-  "peerDependenciesMeta": {
-    "@usecannon/builder": {
-      "optional": true
-    },
-    "hardhat": {
-      "optional": true
-    }
+    "typechain": "^8.3.1",
+    "typescript": "^5.2.2"
   },
   "gitHead": "6ad3588038432a2015409633fe7d0dc641f54a27",
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "yarn@3.6.3"
 }
