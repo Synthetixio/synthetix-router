@@ -134,3 +134,7 @@ dist
 !.yarn/sdks
 .yarn/versions
 .pnp.*
+
+/cache
+/dist
+/node_modules
