@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import hre from 'hardhat';
 import path from 'node:path';
 import { ChainBuilderContext, ContractMap } from '@usecannon/builder';
-import { JsonRpcProvider, Signer, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { glob, runTypeChain } from 'typechain';
 
 interface Params {
@@ -22,8 +22,8 @@ declare module 'hardhat/types/config' {
 
 export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonfile.toml' }) {
   let outputs: ChainBuilderContext;
-  let provider: JsonRpcProvider;
-  let signers: Signer[];
+  let provider: ethers.providers.JsonRpcProvider;
+  let signers: ethers.Signer[];
 
   before(async function prepareNode() {
     this.timeout(900000);
@@ -50,8 +50,8 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
     });
 
     outputs = cannonInfo.outputs;
-    provider = cannonInfo.provider as JsonRpcProvider;
-    signers = cannonInfo.signers as Signer[];
+    provider = cannonInfo.provider as ethers.providers.JsonRpcProvider;
+    signers = cannonInfo.signers as ethers.Signer[];
 
     for (const signer of signers) {
       await provider.send('hardhat_setBalance', [
@@ -110,7 +110,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 function _getContractFromOutputs(
   contractName: string,
   outputs: ChainBuilderContext,
-  provider: JsonRpcProvider,
+  provider: ethers.providers.JsonRpcProvider,
   address?: string
 ) {
   let contract;
