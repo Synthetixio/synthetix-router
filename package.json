@@ -35,14 +35,14 @@
     "pretty:fix": "prettier --write ."
   },
   "peerDependencies": {
-    "@usecannon/builder": "^2.4.0-alpha.1",
+    "@usecannon/builder": "^2.5.0",
     "ethers": "^5.0.0",
     "hardhat": "^2.0.0",
     "solc": "^0.8.17"
   },
   "dependencies": {
+    "@ethersproject/keccak256": "^5.7.0",
     "debug": "^4.3.4",
-    "lodash": "^4.17.21",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
@@ -54,16 +54,15 @@
     "@types/node": "^18.16.18",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
-    "@usecannon/builder": "^2.4.16",
-    "ajv": "^8.11.0",
+    "@usecannon/builder": "^2.5.4",
     "eslint": "8.43.0",
     "eslint-plugin-no-only-tests": "^3.1.0",
-    "ethers": "^5.7.2",
-    "hardhat": "^2.0.0",
+    "ethers": "^6.7.1",
+    "hardhat": "^2.17.2",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.8.8",
-    "solc": "^0.8.17",
+    "solc": "^0.8.21",
     "ts-node": "^10.9.1",
     "typechain": "^8.2.0",
     "typescript": "^4.9.5"
@@ -72,7 +71,13 @@
     "@usecannon/builder": {
       "optional": true
     },
+    "ethers": {
+      "optional": true
+    },
     "hardhat": {
+      "optional": true
+    },
+    "solc": {
       "optional": true
     }
   },
