@@ -20,7 +20,7 @@ interface CompileResult {
   };
 }
 
-export function getCompileInput(contractName: string, sourceCode: string) {
+export function getCompileInput(contractName: string, sourceCode: string, evmVersion = 'merge') {
   return {
     language: 'Solidity',
     sources: {
@@ -30,19 +30,27 @@ export function getCompileInput(contractName: string, sourceCode: string) {
     },
     settings: {
       outputSelection: {
-        '*': {
-          '*': ['*'],
-        },
+        '*': { '*': ['*'] },
       },
-      evmVersion: 'paris', // lock to older evm version for the time b eing because there is no way to specify it from outside of the tool
+      evmVersion,
     },
   };
 }
 
-export async function compileContract(contractName: string, sourceCode: string) {
-  const input = getCompileInput(contractName, sourceCode);
+export async function compileContract(
+  contractName: string,
+  sourceCode: string,
+  evmVersion = 'merge'
+) {
+  const input = getCompileInput(contractName, sourceCode, evmVersion);
 
   const solResult = JSON.parse(await solc.compile(JSON.stringify(input)));
+
+  if (solResult.errors) {
+    console.error(solResult.errors);
+    throw new Error(`There was an error when compiling ${contractName}`);
+  }
+
   const info = solResult.contracts[`${contractName}.sol`][contractName];
   const metadata = JSON.parse(info.metadata);
 
