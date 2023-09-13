@@ -7,7 +7,7 @@ pragma solidity ^0.8.0;
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
-contract Router {
+contract SampleRouter {
     error UnknownSelector(bytes4 sel);
 
     address private constant _SAMPLE_MODULE = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
