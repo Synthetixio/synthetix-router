@@ -5,9 +5,11 @@ import { loadFile } from './helpers';
 
 describe('src/compile.ts', function () {
   it('correctly compiles SampleRouter.sol with default version', async function () {
-    const contractName = 'Router';
+    const contractName = 'SampleRouter';
     const sourceCode = await loadFile('../fixtures/SampleRouter.sol');
     const result = await compileContract(contractName, sourceCode);
+
+    console.log(result.solcVersion);
 
     ok(Array.isArray(result.abi));
     ok(typeof result.metadata === 'string');

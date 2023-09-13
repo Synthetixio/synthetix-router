@@ -31,9 +31,10 @@ describe('src/generate.ts', function () {
     }, ContractValidationError);
   });
 
-  it('correctly compiles SampleRouter.sol', async function () {
+  it('correctly generates SampleRouter.sol', async function () {
     const expected = await loadFile('../fixtures/SampleRouter.sol');
     const result = generateRouter({
+      contractName: 'SampleRouter',
       contracts: [
         {
           abi,
