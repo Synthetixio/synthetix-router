@@ -20,7 +20,7 @@ interface CompileResult {
   };
 }
 
-export function getCompileInput(contractName: string, sourceCode: string, evmVersion = 'merge') {
+export function getCompileInput(contractName: string, sourceCode: string, evmVersion?: string) {
   return {
     language: 'Solidity',
     sources: {
@@ -40,15 +40,19 @@ export function getCompileInput(contractName: string, sourceCode: string, evmVer
 export async function compileContract(
   contractName: string,
   sourceCode: string,
-  evmVersion = 'merge'
+  evmVersion?: string
 ) {
   const input = getCompileInput(contractName, sourceCode, evmVersion);
 
   const solResult = JSON.parse(await solc.compile(JSON.stringify(input)));
 
   if (solResult.errors) {
-    console.error(solResult.errors);
-    throw new Error(`There was an error when compiling ${contractName}`);
+    throw new Error(
+      [
+        `There was an error when compiling "${contractName}".`,
+        ...solResult.errors.map((err: { message: string }) => err.message),
+      ].join(' ')
+    );
   }
 
   const info = solResult.contracts[`${contractName}.sol`][contractName];
