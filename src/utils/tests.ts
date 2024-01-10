@@ -77,6 +77,11 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
     return provider;
   }
 
+  function getExtras() {
+    if (!outputs) throw new Error('Node not initialized yet');
+    return outputs.extras;
+  }
+
   function getContract<T extends keyof Contracts>(contractName: T, address?: string) {
     if (!outputs) throw new Error('Node not initialized yet');
     const contract = _getContractFromOutputs(contractName as string, outputs, provider, address);
@@ -101,6 +106,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
   return {
     getContract,
+    getExtras,
     getSigners,
     getProvider,
     createSnapshot,
