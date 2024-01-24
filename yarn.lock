@@ -1439,7 +1439,6 @@ __metadata:
     typescript: ^5.2.2
   peerDependencies:
     "@usecannon/builder": ^2.0.0
-    ethers: ^5.0.0
     hardhat: ^2.0.0
     solc: ^0.8.17
   languageName: unknown
