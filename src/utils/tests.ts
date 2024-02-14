@@ -5,7 +5,6 @@ import hre from 'hardhat';
 import path from 'node:path';
 import { ChainBuilderContext, ContractMap } from '@usecannon/builder';
 import { ethers } from 'ethers';
-import { getContractData } from 'hardhat-cannon/src/utils';
 import { glob, runTypeChain } from 'typechain';
 
 interface Params {
@@ -101,7 +100,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
   function getContract<T extends keyof Contracts>(contractName: T, address?: string) {
     if (!outputs) throw new Error('Node not initialized yet');
-    const contract = _getContractFromOutputs(contractName as string, provider, address);
+    const contract = _getContractFromOutputs(contractName as string, outputs, provider, address);
     const [owner] = Array.isArray(signers) ? signers : [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Contract = owner ? contract.connect(owner as unknown as any) : contract;
@@ -132,10 +131,40 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
 function _getContractFromOutputs(
   contractName: string,
+  outputs: ChainBuilderContext,
   provider: ethers.providers.JsonRpcProvider,
   address?: string
 ) {
-  const contract = getContractData(contractName);
+  let contract;
+
+  if (contractName.includes('.')) {
+    const nestedContracts = contractName.split('.');
+
+    // this logic handles deeply nested imports such as synthetix.oracle_manager.Proxy
+    // which is really outputs.imports.synthetix.imports.oracle_manager.contracts.Proxy
+
+    let imports: ChainBuilderContext['imports'] | undefined = outputs.imports;
+
+    for (const c of nestedContracts.slice(0, -2)) {
+      if (!imports![c]) {
+        throw new Error(`cannonfile does not includes an import named "${c}"`);
+      } else {
+        imports = imports![c].imports;
+      }
+    }
+
+    contract =
+      imports![nestedContracts[nestedContracts.length - 2]].contracts![
+        nestedContracts[nestedContracts.length - 1]
+      ];
+  } else {
+    contract = outputs.contracts[contractName];
+  }
+
+  if (!contract) {
+    throw new Error(`Contract "${contractName}" not found on cannon build`);
+  }
+
   return new ethers.Contract(
     address || contract.address,
     contract.abi as any, // eslint-disable-line @typescript-eslint/no-explicit-any
