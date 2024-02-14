@@ -51,7 +51,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
     outputs = cannonInfo.outputs;
 
-    if (hre.network.name !== 'hardhat' && hre.network.name === 'cannon') {
+    if (hre.network.name !== 'hardhat' && hre.network.name !== 'cannon') {
       throw new Error('Tests helpers can only be used on hardhat or cannon networks');
     }
 
