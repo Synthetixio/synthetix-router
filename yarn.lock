@@ -1435,22 +1435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/router@npm:^3.3.2":
-  version: 3.3.4
-  resolution: "@synthetixio/router@npm:3.3.4"
-  dependencies:
-    "@ethersproject/keccak256": ^5.7.0
-    debug: ^4.3.4
-    mustache: ^4.2.0
-  peerDependencies:
-    "@usecannon/builder": ^2.0.0
-    hardhat: ^2.0.0
-    solc: ^0.8.17
-  checksum: a1c01b1363547bdadc3a1e722258d1573735785fb20d4105d92ae9e0b682e810e402011f2891245480f6a8865e2cddfffae25561dd884272d6cabfe63c2c82a8
-  languageName: node
-  linkType: hard
-
-"@synthetixio/router@workspace:.":
+"@synthetixio/router@^3.3.2, @synthetixio/router@workspace:.":
   version: 0.0.0-use.local
   resolution: "@synthetixio/router@workspace:."
   dependencies:
