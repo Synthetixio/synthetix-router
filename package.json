@@ -1,6 +1,6 @@
 {
   "name": "@synthetixio/router",
-  "version": "3.3.5-alpha.0",
+  "version": "3.3.5",
   "publishConfig": {
     "access": "public"
   },
