@@ -3,10 +3,10 @@
 import fs from 'node:fs/promises';
 import hre from 'hardhat';
 import path from 'node:path';
-import { ChainBuilderContext, ContractMap } from '@usecannon/builder';
 import { ethers } from 'ethers';
 import { glob, runTypeChain } from 'typechain';
 
+import { ChainBuilderContext, ContractMap } from './cannon-types';
 import { getHardhatSigners } from './get-hardhat-signers';
 
 interface Params {
