@@ -7,6 +7,8 @@ import { ChainBuilderContext, ContractMap } from '@usecannon/builder';
 import { ethers } from 'ethers';
 import { glob, runTypeChain } from 'typechain';
 
+import { getHardhatSigners } from './get-hardhat-signers';
+
 interface Params {
   cannonfile?: string;
   dryRun?: boolean;
@@ -34,6 +36,8 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
     const cannonInfo = await hre.run('cannon:build', params);
 
+    outputs = cannonInfo.outputs;
+
     // We have to manually write the deployments files instead of using the cannon:inspect
     // task because that task needs a local build to exist, but, we don't have it
     // on coverage tests because they use --network hardhat instead of --network cannon
@@ -49,25 +53,13 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
       outDir: typechainFolder,
     });
 
-    outputs = cannonInfo.outputs;
-
-    if (hre.network.name !== 'hardhat' && hre.network.name !== 'cannon') {
-      throw new Error('Tests helpers can only be used on hardhat or cannon networks');
-    }
-
-    provider =
-      hre.network.name === 'hardhat'
-        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (hre as any).ethers.provider
-        : new ethers.providers.JsonRpcProvider(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            `http://127.0.0.1:${(hre.config.networks.cannon as any).port}`
-          );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    provider = new (hre as any).ethers.providers.Web3Provider(
+      cannonInfo.provider
+    ) as ethers.providers.Web3Provider;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    signers = (await (hre as any).ethers.getSigners()).map((s: ethers.Signer) =>
-      s.connect(provider)
-    );
+    signers = await getHardhatSigners(hre, provider);
 
     for (const signer of signers) {
       await provider.send('hardhat_setBalance', [
@@ -129,12 +121,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
   };
 }
 
-function _getContractFromOutputs(
-  contractName: string,
-  outputs: ChainBuilderContext,
-  provider: ethers.providers.JsonRpcProvider,
-  address?: string
-) {
+function _getContractDataFromOutputs(contractName: string, outputs: ChainBuilderContext) {
   let contract;
 
   if (contractName.includes('.')) {
@@ -164,6 +151,17 @@ function _getContractFromOutputs(
   if (!contract) {
     throw new Error(`Contract "${contractName}" not found on cannon build`);
   }
+
+  return contract;
+}
+
+function _getContractFromOutputs(
+  contractName: string,
+  outputs: ChainBuilderContext,
+  provider: ethers.providers.JsonRpcProvider,
+  address?: string
+) {
+  const contract = _getContractDataFromOutputs(contractName, outputs);
 
   return new ethers.Contract(
     address || contract.address,
