@@ -15,13 +15,6 @@ interface Params {
   impersonate?: string;
 }
 
-// Deployments path added by hardhat-cannon
-declare module 'hardhat/types/config' {
-  export interface ProjectPathsConfig {
-    deployments: string;
-  }
-}
-
 export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonfile.toml' }) {
   let outputs: ChainBuilderContext;
   let provider: ethers.providers.JsonRpcProvider;
