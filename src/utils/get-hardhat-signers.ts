@@ -11,7 +11,6 @@ export async function getHardhatSigners(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Wallet: typeof ethers.Wallet = (hre as any).ethers.Wallet;
 
-  console.log({ accounts });
   if (Array.isArray(accounts)) {
     signers = accounts.map(
       (account) => new Wallet(typeof account === 'string' ? account : account.privateKey)
