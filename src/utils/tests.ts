@@ -94,19 +94,37 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
     if (!outputs) throw new Error('Node not initialized yet');
     const contract = _getContractFromOutputs(contractName as string, outputs, provider, address);
     const [owner] = Array.isArray(signers) ? signers : [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Contract = owner ? contract.connect(owner as unknown as any) : contract;
+    const Contract = owner ? contract.connect(owner) : contract;
     return Contract as unknown as Contracts[T];
   }
 
   function createSnapshot() {
-    let snapshotId: string;
+    let snapshotId: number;
+
+    async function finaliseTxns() {
+      const p = getProvider();
+      const blockNumber = await p.getBlockNumber();
+      const block = await p.getBlockWithTransactions(blockNumber);
+      if (block?.transactions) {
+        for await (const tx of block.transactions) {
+          try {
+            await tx.wait();
+          } catch (e) {
+            console.log('Leftover transaction', tx);
+            console.error(e);
+            // I really don't care if you fail or not
+          }
+        }
+      }
+    }
 
     before('create snapshot', async function () {
+      await finaliseTxns();
       snapshotId = await provider.send('evm_snapshot', []);
     });
 
     return async function restoreSnapshot() {
+      await finaliseTxns();
       await provider.send('evm_revert', [snapshotId]);
       snapshotId = await provider.send('evm_snapshot', []);
     };
