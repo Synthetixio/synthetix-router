@@ -49,4 +49,24 @@ describe('src/generate.ts', function () {
 
     deepEqual(result, expected);
   });
+
+  it('generates with receive eth capability SampleRouter.sol', async function () {
+    const expected = await loadFile('../fixtures/SampleRouterWithRecv.sol');
+    const result = generateRouter({
+      contractName: 'SampleRouter',
+      contracts: [
+        {
+          abi,
+          deployedAddress: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+          deployTxnHash: '0x849b033c0ee690c8b9a53057495d9b3e16588a26d51a7cad4dfc6cd3d310ce0e',
+          contractName: 'SampleModule',
+          sourceName: 'contracts/modules/SampleModule.sol',
+          contractFullyQualifiedName: 'contracts/modules/SampleModule.sol:SampleModule',
+        },
+      ],
+      canReceivePlainETH: true,
+    });
+
+    deepEqual(result, expected);
+  });
 });
