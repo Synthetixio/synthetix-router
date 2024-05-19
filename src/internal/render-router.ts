@@ -13,6 +13,7 @@ interface Props {
   routerName?: string;
   template?: string;
   functionFilter?: (fnName: string) => boolean;
+  canReceivePlainETH?: boolean;
   contracts: ContractData[];
 }
 
@@ -37,6 +38,7 @@ export function renderRouter({
   routerName = 'Router',
   template = routerTemplate,
   functionFilter = routerFunctionFilter,
+  canReceivePlainETH = false,
   contracts,
 }: Props) {
   if (!Array.isArray(contracts) || contracts.length === 0) {
@@ -56,7 +58,7 @@ export function renderRouter({
     // Note: Plain ETH transfers are disabled by default. Set this to true to
     // enable them. If there is ever a use case for this, it might be a good
     // idea to expose the boolean in the router tool's interface.
-    receive: _renderReceive(false),
+    receive: _renderReceive(canReceivePlainETH),
   });
 }
 
