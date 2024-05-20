@@ -80,7 +80,7 @@ export function coreBootstrap<Contracts>(params: Params = { cannonfile: 'cannonf
 
   function getExtras() {
     if (!outputs) throw new Error('Node not initialized yet');
-    return outputs.extras;
+    return outputs.settings;
   }
 
   function getContract<T extends keyof Contracts>(contractName: T, address?: string) {
